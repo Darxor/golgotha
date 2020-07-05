@@ -21,7 +21,7 @@ MODELS = {    'BERT':          (BertModel,       BertTokenizer),
               'BART':          (BartModel,       BartTokenizer),
               'ELECTRA':       (ElectraModel,    ElectraTokenizer),
               'Reformer':      (ReformerModel,   ReformerTokenizer),
-              'Marian':        (MarianModel,     MarianTokenizer),
+              'MarianMT':      (MarianMTModel,     MarianTokenizer),
               'Longformer':    (LongformerModel, LongformerTokenizer)
          }
 
