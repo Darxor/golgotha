@@ -5,6 +5,7 @@ Version: 0.2.0
 Maintainer: Jan Wijffels <jwijffels@bnosac.be>
 Authors@R: c(
     person('Jan', 'Wijffels', role = c('aut', 'cre', 'cph'), email = 'jwijffels@bnosac.be'), 
+    person('Christophe', 'Regouby', role = c('aut'), email = 'christophe.regouby@free.fr'), 
     person('BNOSAC', role = 'cph'))
 Description: Wraps the transformers Python module described in 
     "HuggingFace's Transformers: State-of-the-art Natural Language Processing" by Wolf T. et al. (2020) <arXiv:1910.03771> in order to easily obtain contextualised embeddings of sentences.
@@ -26,7 +27,7 @@ Config/reticulate:
   list(
     packages = list(
       list(package = "torch", pip = TRUE),
-      list(package = "transformers", version = "2.4.1", pip = TRUE)
+      list(package = "transformers", version = "2.11.0", pip = TRUE)
     )
   )    
 RoxygenNote: 7.1.0

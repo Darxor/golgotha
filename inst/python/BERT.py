@@ -13,7 +13,16 @@ MODELS = {    'BERT':          (BertModel,       BertTokenizer),
               'DistilBERT':    (DistilBertModel, DistilBertTokenizer),
               'RoBERTa':       (RobertaModel,    RobertaTokenizer),
               'XLM-RoBERTa':   (XLMRobertaModel, XLMRobertaTokenizer),
-              'GPT-2-LMHead':  (GPT2LMHeadModel, GPT2Tokenizer)
+              'GPT-2-LMHead':  (GPT2LMHeadModel, GPT2Tokenizer),
+              'CamenBERT':     (CamembertModel,  CamembertTokenizer),
+              'FlauBERT':      (FlaubertModel,   FlaubertTokenizer),
+              'ALBERT':        (AlbertModel,     AlbertTokenizer),
+              'T5':            (T5Model,         T5Tokenizer),
+              'BART':          (BartModel,       BartTokenizer),
+              'ELECTRA':       (ElectraModel,    ElectraTokenizer),
+              'Reformer':      (ReformerModel,   ReformerTokenizer),
+              'Marian':        (MarianModel,     MarianTokenizer),
+              'Longformer':    (LongformerModel, LongformerTokenizer)
          }
 
 class Embedder():
