@@ -23,7 +23,7 @@ local <- new.env()
 }
 
 known_architectures <- c("BERT", "GPT", "GPT-2", "CTRL", "Transformer-XL", "XLNet", "XLM", "DistilBERT", "RoBERTa", "XLM-RoBERTa",
-                         "GPT-2-LMHead", "CamenBERT", "FlauBERT", "ALBERT", "T5", "BART", "ELECTRA", "Reformer", "Marian", "Longformer")
+                         "GPT-2-LMHead", "CamenBERT", "FlauBERT", "ALBERT", "T5", "BART", "ELECTRA", "Reformer", "MarianMT", "Longformer")
 validate_architecture <- function(architecture){
   if(!architecture %in% known_architectures){
     stop(sprintf("%s not in list of known architectures: %s", paste(architecture, collapse = ", "), paste(sort(known_architectures), collapse = ", ")))
