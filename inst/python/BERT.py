@@ -37,15 +37,15 @@ class Embedder():
 	def embed_tokens(self, text):
 		output = self.nlp_feature_extraction(text)
 		return(output)
-	def generate(self, text, max_length = 50):
+	def generate(self, text, max_length = 50, **kwargs):
 	  input_ids = self.tokenizer.encode(text, return_tensors="pt")
-	  generated = self.model.generate(input_ids, max_length = max_length)
+	  generated = self.model.generate(input_ids, max_length = max_length, kwargs)
 	  newtext = self.tokenizer.decode(generated.tolist()[0])
 	  return(newtext)
-	def embed_sentence(self, text, max_length = 512):
+	def embed_sentence(self, text, max_length = 512, **kwargs):
 		input_ids = self.tokenizer.encode(text, add_special_tokens = True, max_length = max_length, return_tensors = 'pt')		
 		with torch.no_grad():
-			output_tuple = self.model(input_ids)
+			output_tuple = self.model(input_ids, kwargs)
   		
 		output = output_tuple[0].squeeze()
 		output = output.mean(dim = 0)

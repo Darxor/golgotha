@@ -147,7 +147,7 @@ print.Transformer <- function(x, ...){
 #'
 #' unlink(file.path(system.file(package = "golgotha", "models"),
 #'        "bert-base-multilingual-uncased"), recursive = TRUE)
-predict.Transformer <- function(object, newdata, type = c("embed-sentence", "embed-token", "tokenise"), trace = 10, ...){
+predict.Transformer <- function(object, newdata, type = c("embed-sentence", "embed-token", "tokenise", "generate"), trace = 10, ...){
   if(is.character(newdata)){
     if(is.null(names(newdata))){
       newdata <- data.frame(doc_id = seq_along(newdata), text = newdata, stringsAsFactors = FALSE)

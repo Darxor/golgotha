@@ -98,7 +98,7 @@ model <- transformer("distilroberta-base", architecture = "DistilBERT")
 ```
 library(reticulate)
 install_miniconda()
-conda_install(envname = 'r-reticulate', c('torch', 'transformers==2.4.1'), pip = TRUE)
+conda_install(envname = 'r-reticulate', c('torch', 'transformers==2.11.0'), pip = TRUE)
 ```
 
 ### Continuous Integration

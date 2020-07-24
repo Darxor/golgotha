@@ -10,7 +10,7 @@ local <- new.env()
 
 .onLoad <- function(libname, pkgname) {
   #packageStartupMessage("- Connecting/Setting up Python using reticulate")
-  reticulate::configure_environment(pkgname)
+  #reticulate::configure_environment(pkgname)
   #packageStartupMessage("- Loading golgotha BERT code")
 
   oldwd <- getwd()
