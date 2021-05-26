@@ -4,25 +4,25 @@ import torch
 # for 10 transformer architectures and 30 pretrained weights.
 #            Architecture      | Model          | Tokenizer          
 MODELS = {    'BERT':          (BertModel,       BertTokenizer),
-              'GPT':           (OpenAIGPTModel,  OpenAIGPTTokenizer),
-              'GPT-2':         (GPT2Model,       GPT2Tokenizer),
+              'GPT':           (OpenAIGPTModel,  OpenAIGPTTokenizerFast),
+              'GPT-2':         (GPT2Model,       GPT2TokenizerFast),
               'CTRL':          (CTRLModel,       CTRLTokenizer),
               'Transformer-XL':(TransfoXLModel,  TransfoXLTokenizer),
-              'XLNet':         (XLNetModel,      XLNetTokenizer),
+              'XLNet':         (XLNetModel,      XLNetTokenizerFast),
               'XLM':           (XLMModel,        XLMTokenizer),
-              'DistilBERT':    (DistilBertModel, DistilBertTokenizer),
-              'RoBERTa':       (RobertaModel,    RobertaTokenizer),
-              'XLM-RoBERTa':   (XLMRobertaModel, XLMRobertaTokenizer),
-              'GPT-2-LMHead':  (GPT2LMHeadModel, GPT2Tokenizer),
-              'CamenBERT':     (CamembertModel,  CamembertTokenizer),
+              'DistilBERT':    (DistilBertModel, DistilBertTokenizerFast),
+              'RoBERTa':       (RobertaModel,    RobertaTokenizerFast),
+              'XLM-RoBERTa':   (XLMRobertaModel, XLMRobertaTokenizerFast),
+              'GPT-2-LMHead':  (GPT2LMHeadModel, GPT2TokenizerFast),
+              'CamenBERT':     (CamembertModel,  CamembertTokenizerFast),
               'FlauBERT':      (FlaubertModel,   FlaubertTokenizer),
-              'ALBERT':        (AlbertModel,     AlbertTokenizer),
-              'T5':            (T5Model,         T5Tokenizer),
-              'BART':          (BartModel,       BartTokenizer),
-              'ELECTRA':       (ElectraModel,    ElectraTokenizer),
-              'Reformer':      (ReformerModel,   ReformerTokenizer),
+              'ALBERT':        (AlbertModel,     AlbertTokenizerFast),
+              'T5':            (T5Model,         T5TokenizerFast),
+              'BART':          (BartModel,       BartTokenizerFast),
+              'ELECTRA':       (ElectraModel,    ElectraTokenizerFast),
+              'Reformer':      (ReformerModel,   ReformerTokenizerFast),
               'MarianMT':      (MarianMTModel,   MarianTokenizer),
-              'Longformer':    (LongformerModel, LongformerTokenizer)
+              'Longformer':    (LongformerModel, LongformerTokenizerFast)
          }
 
 class Embedder():
