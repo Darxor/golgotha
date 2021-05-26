@@ -166,7 +166,8 @@ predict.Transformer <- function(object, newdata, type = c("embed-sentence", "emb
     results <- lapply(newdata$text, FUN=object$generate, ...)
     names(results) <- newdata$doc_id
   }else{
-    results <- list()
+    results <- vector(mode = "list", length = nrow(newdata))
+    names(results) <- newdata$doc_id
     for(row in seq_len(nrow(newdata))){
       doc <- newdata$doc_id[row]
       if(trace > 0){
@@ -181,7 +182,7 @@ predict.Transformer <- function(object, newdata, type = c("embed-sentence", "emb
       }else if(type == "embed-sentence"){
         emb <- object$embed_sentence(text = newdata$text[row], ...)
       }
-      results[[doc]] <- emb
+      results[[row]] <- emb
     }
     if(type == "embed-sentence"){
       results <- do.call(rbind, results)
