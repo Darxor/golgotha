@@ -1,7 +1,7 @@
 Package: golgotha
 Type: Package
 Title: Contextualised Embeddings and Language Modelling using BERT
-Version: 0.2.0
+Version: 0.2.99
 Maintainer: Jan Wijffels <jwijffels@bnosac.be>
 Authors@R: c(
     person('Jan', 'Wijffels', role = c('aut', 'cre', 'cph'), email = 'jwijffels@bnosac.be'), 
@@ -18,7 +18,7 @@ Description: Wraps the transformers Python module described in
 License: MPL-2.0
 Encoding: UTF-8
 Archs: x64
-SystemRequirements: Python (>= 2.7.0)
+SystemRequirements: Python (>= 3.6.0)
 Suggests: 
     tinytest
 Depends:
@@ -27,7 +27,8 @@ Config/reticulate:
   list(
     packages = list(
       list(package = "torch", pip = TRUE),
-      list(package = "transformers", version = "2.11.0", pip = TRUE)
+      list(package = "transformers", version = "4.6.1", pip = TRUE),
+      list(package = "sentencepiece", pip = TRUE)
     )
   )    
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1

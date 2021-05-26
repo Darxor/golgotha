@@ -7,7 +7,8 @@
 transformer(
   model_name,
   architecture = "BERT",
-  path = system.file(package = "golgotha", "models")
+  path = system.file(package = "golgotha", "models"),
+  use_cuda = FALSE
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ transformer(
 \item{architecture}{character string of the model architecture family name. Currently supported architecture are 'BERT', 'GPT', 'GPT-2', 'CTRL', 'Transformer-XL', 'XLNet', 'XLM', 'DistilBERT', 'RoBERTa' and 'XLM-RoBERTa'. Defaults to 'BERT'}
 
 \item{path}{path to a directory on disk where the model is stored}
+
+\item{use_cuda}{use CUDA if avalible}
 }
 \value{
 an object of class Transformer

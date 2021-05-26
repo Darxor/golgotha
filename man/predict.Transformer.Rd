@@ -7,7 +7,7 @@
 \method{predict}{Transformer}(
   object,
   newdata,
-  type = c("embed-sentence", "embed-token", "tokenise"),
+  type = c("embed-sentence", "embed-token", "tokenise", "generate"),
   trace = 10,
   ...
 )

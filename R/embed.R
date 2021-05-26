@@ -46,6 +46,7 @@ transformer_download_model <- function(model_name = "bert-base-multilingual-unca
 #' @param model_name character string of the chosen model within the architecture family. E.g. 'bert-base-uncased', 'bert-base-multilingual-uncased', 'bert-base-multilingual-cased', 'bert-base-dutch-cased' for 'BERT' architecture family. Defaults to 'bert-base-multilingual-uncased'.
 #' @param architecture character string of the model architecture family name. Currently supported architecture are 'BERT', 'GPT', 'GPT-2', 'CTRL', 'Transformer-XL', 'XLNet', 'XLM', 'DistilBERT', 'RoBERTa' and 'XLM-RoBERTa'. Defaults to 'BERT'
 #' @param path path to a directory on disk where the model is stored
+#' @param use_cuda use CUDA device if available. Currently only uses cuda:0. Silently switches to FALSE, if CUDA is unavailable.
 #' @export
 #' @return an object of class Transformer
 #' @examples
@@ -82,7 +83,7 @@ transformer_download_model <- function(model_name = "bert-base-multilingual-unca
 #'        "bert-base-multilingual-uncased"), recursive = TRUE)
 #' unlink(file.path(system.file(package = "golgotha", "models"),
 #'        "bert-base-multilingual-cased"), recursive = TRUE)
-transformer <- function(model_name, architecture = "BERT", path = system.file(package = "golgotha", "models")){
+transformer <- function(model_name, architecture = "BERT", path = system.file(package = "golgotha", "models"), use_cuda = FALSE){
   if(missing(path)){
     path <- file.path(path, model_name)
   }
@@ -95,7 +96,7 @@ transformer <- function(model_name, architecture = "BERT", path = system.file(pa
   oldwd <- getwd()
   on.exit(setwd(oldwd))
   setwd(system.file(package = "golgotha", "python"))
-  x <- nlp$Embedder(path = path, architecture = architecture)
+  x <- nlp$Embedder(path = path, architecture = architecture, use_cuda = use_cuda)
   attr(x, "path") <- path
   attr(x, "model_name") <- model_name
   attr(x, "architecture") <- architecture
@@ -219,6 +220,7 @@ bert_download_model <- function(model_name = "bert-base-multilingual-uncased",
 #' @description Load a BERT-like Transformer model stored on disk
 #' @param model_name character string with the name of the model. E.g. 'bert-base-uncased', 'bert-base-multilingual-uncased', 'bert-base-multilingual-cased', 'bert-base-dutch-cased'. Defaults to 'bert-base-multilingual-uncased'.
 #' @param path path to a directory on disk where the model is stored
+#' @param use_cuda use CUDA device if available. Currently only uses cuda:0. Silently switches to FALSE, if CUDA is unavailable.
 #' @export
 #' @return the directory where the model is saved to
 #' @examples
@@ -245,10 +247,10 @@ bert_download_model <- function(model_name = "bert-base-multilingual-uncased",
 #'
 #' unlink(file.path(system.file(package = "golgotha", "models"),
 #'        "bert-base-multilingual-uncased"), recursive = TRUE)
-BERT <- function(model_name, path = system.file(package = "golgotha", "models")){
+BERT <- function(model_name, path = system.file(package = "golgotha", "models"), use_cuda = FALSE){
   if(missing(path)){
     path <- file.path(path, model_name)
   }
-  x <- transformer(model_name = model_name, path = path, architecture = "BERT")
+  x <- transformer(model_name = model_name, path = path, architecture = "BERT", use_cuda = use_cuda)
   x
 }

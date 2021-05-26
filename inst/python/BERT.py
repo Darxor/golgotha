@@ -21,16 +21,19 @@ MODELS = {    'BERT':          (BertModel,       BertTokenizer),
               'BART':          (BartModel,       BartTokenizer),
               'ELECTRA':       (ElectraModel,    ElectraTokenizer),
               'Reformer':      (ReformerModel,   ReformerTokenizer),
-              'MarianMT':      (MarianMTModel,     MarianTokenizer),
+              'MarianMT':      (MarianMTModel,   MarianTokenizer),
               'Longformer':    (LongformerModel, LongformerTokenizer)
          }
 
 class Embedder():
-	def __init__(self, path = None, architecture = "BERT"):
+	def __init__(self, path = None, architecture = "BERT", use_cuda = False):
 		model_class, tokenizer_class = MODELS[architecture]
-		self.model = model_class.from_pretrained(path)
+		use_cuda = use_cuda & torch.cuda.is_available()
+		self.device = "cuda:0" if use_cuda else "cpu"
+		self.device_id = 0 if use_cuda else -1
+		self.model = model_class.from_pretrained(path).to(self.device)
 		self.tokenizer = tokenizer_class.from_pretrained(path)
-		self.nlp_feature_extraction = pipeline("feature-extraction", model = self.model, tokenizer = self.tokenizer)
+		self.nlp_feature_extraction = pipeline("feature-extraction", model = self.model, tokenizer = self.tokenizer, device = self.device_id)
 	def tokenize(self, text):
 		output = self.tokenizer.tokenize(text)
 		return(output)
@@ -38,18 +41,20 @@ class Embedder():
 		output = self.nlp_feature_extraction(text)
 		return(output)
 	def generate(self, text, max_length = 50, **kwargs):
-	  input_ids = self.tokenizer.encode(text, return_tensors="pt")
-	  generated = self.model.generate(input_ids, max_length = max_length, kwargs)
-	  newtext = self.tokenizer.decode(generated.tolist()[0])
-	  return(newtext)
+		input_ids = self.tokenizer.encode(text, return_tensors = "pt").to(self.device)
+		generated = self.model.generate(input_ids, kwargs, max_length = max_length, truncation = True)
+		newtext = self.tokenizer.decode(generated.tolist()[0])
+		return(newtext)
 	def embed_sentence(self, text, max_length = 512, **kwargs):
-		input_ids = self.tokenizer.encode(text, add_special_tokens = True, max_length = max_length, return_tensors = 'pt')		
+		input_ids = self.tokenizer.encode(text, add_special_tokens = True,
+										  max_length = max_length, truncation = True,
+										  return_tensors = 'pt').to(self.device)		
 		with torch.no_grad():
-			output_tuple = self.model(input_ids, kwargs)
+			output_tuple = self.model(input_ids, **kwargs)
   		
 		output = output_tuple[0].squeeze()
 		output = output.mean(dim = 0)
-		output = output.numpy()
+		output = output.cpu().numpy()
 		return(output)
 		
 def download(model_name = "bert-base-multilingual-uncased", path = None, architecture = "BERT"):

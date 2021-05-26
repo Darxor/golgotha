@@ -12,7 +12,7 @@
 - For installing the development version of this package: 
     - Execute in R: `devtools::install_github("bnosac/golgotha", INSTALL_opts = "--no-multiarch")`
     - Look to the documentation of the functions: `help(package = "golgotha")`
-
+    
 ## Example with BERT model architecture
 
 - Download a model (e.g. bert multilingual lowercased) 
@@ -72,6 +72,34 @@ embedding <- predict(model, x, type = "embed-token")
 tokens    <- predict(model, x, type = "tokenise")
 ```
 
+## GPU Support
+
+This package supports assigning tensors to GPU. However, it installs the default version of torch, available at PyPi, which is usually a CPU version. In order for torch to support GPU, you will need to configure CUDA and install a CUDA-compatible version of torch. Follow [instructions](https://pytorch.org/get-started/locally/) provided by torch themselves.
+
+If you confirmed you have CUDA and know its version, you can install appropriate torch version directly from R, using code similar to one below (example for torch 1.8.8 and CUDA 11.1):
+
+```{r}
+reticulate::conda_install(
+  envname = 'r-reticulate',
+  'torch==1.8.1+cu111',
+  pip = TRUE,
+  pip_options = "-f https://download.pytorch.org/whl/torch_stable.html"
+)
+```
+
+You should check if CUDA is available to Torch with following code.
+
+```{python}
+import torch
+torch.cuda.is_available()
+```
+
+After all dependencies are satisfied, load a transformer models with `use_cuda = TRUE`, to enable CUDA calculations. Note: this option will silently switch to False, if CUDA is unavalible.
+
+```{r}
+model <- transformer("bert-base-multilingual-uncased", use_cuda = TRUE)
+```
+
 ## Some other models available
 
 The list is not exhaustive. Look to the [transformer documentation](https://github.com/huggingface/transformers#quick-tour) for an up-to-date model list. Available models will also depend on the version of the transformer module you have installed.
@@ -98,9 +126,8 @@ model <- transformer("distilroberta-base", architecture = "DistilBERT")
 ```
 library(reticulate)
 install_miniconda()
-conda_install(envname = 'r-reticulate', c('torch', 'transformers==2.11.0'), pip = TRUE)
+conda_install(envname = 'r-reticulate', c('torch', 'transformers==4.6.1', 'sentencepice'), pip = TRUE)
 ```
 
-### Continuous Integration
+You may also want to check [transformers' requirements](https://pytorch.org/hub/huggingface_pytorch-transformers/).
 
-[![Build Status](https://travis-ci.org/bnosac/golgotha.svg?branch=master)](https://travis-ci.org/bnosac/golgotha)
